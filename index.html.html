@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Síndrome de Dowl - Informações e Recursos</title>
+    <style>
+        /* Variáveis de cores - modo claro (padrão) */
+        :root {
+            --bg-color: #f5f5f5;
+            --main-bg: #ffffff;
+            --text-color: #333333;
+            --header-bg: #4a90e2;
+            --header-text: #ffffff;
+            --nav-bg: #333333;
+            --nav-text: #ffffff;
+            --card-bg: #f9f9f9;
+            --info-box-bg: #f0f7ff;
+            --info-box-border: #4a90e2;
+            --shadow: rgba(0,0,0,0.1);
+            --highlight: #4a90e2;
+        }
+
+        /* Variáveis de cores - modo escuro */
+        body.dark-mode {
+            --bg-color: #121212;
+            --main-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --header-bg: #1a4b82;
+            --header-text: #ffffff;
+            --nav-bg: #111111;
+            --nav-text: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --info-box-bg: #1a2740;
+            --info-box-border: #366fc0;
+            --shadow: rgba(0,0,0,0.3);
+            --highlight: #6aa8ec;
+        }
+
+        /* Transições suaves */
+        * {
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: var(--nav-text);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            color: var(--highlight);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: var(--main-bg);
+            box-shadow: 0 0 10px var(--shadow);
+        }
+
+        .info-box {
+            border-left: 4px solid var(--info-box-border);
+            padding: 1rem;
+            margin: 1rem 0;
+            background-color: var(--info-box-bg);
+        }
+
+        .highlight {
+            color: var(--highlight);
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: var(--nav-bg);
+            color: var(--nav-text);
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1rem auto;
+        }
+
+        .symptom-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .symptom-card {
+            flex-basis: 30%;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .symptom-card {
+                flex-basis: 100%;
+            }
+        }
+
+        /* Botão de modo escuro */
+        #theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--header-bg);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        /* Botão voltar ao topo */
+        #back-to-top {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            background-color: var(--header-bg);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+            display: none;
+        }
+        
+        /* Seção FAQ */
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--shadow);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1rem;
+            background-color: var(--card-bg);
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background-color: var(--main-bg);
+        }
+
+        .faq-answer.active {
+            padding: 1rem;
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Síndrome de Dowl</h1>
+        <p>Informações sobre esta condição genética rara</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#sobre">Sobre a Síndrome</a></li>
+            <li><a href="#sintomas">Sintomas</a></li>
+            <li><a href="#diagnostico">Diagnóstico</a></li>
+            <li><a href="#tratamento">Tratamento</a></li>
+            <li><a href="#recursos">Recursos</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="sobre">
+            <h2>O que é a Síndrome de Dowl?</h2>
+            <div class="info-box">
+                <p>A Síndrome de Dowl (também conhecida como Síndrome de Doyle-Kearns-Sanger) é uma condição genética rara caracterizada por múltiplas anomalias congênitas, afetando principalmente o desenvolvimento físico e neurológico.</p>
+            </div>
+            
+            <p>Esta síndrome rara foi identificada e descrita pela primeira vez por médicos geneticistas na década de 1970. É uma condição que afeta o desenvolvimento de múltiplos sistemas do corpo, resultando em uma série de manifestações clínicas que variam em gravidade entre os indivíduos afetados.</p>
+            
+            <h3>Causas Genéticas</h3>
+            <p>A Síndrome de Dowl é causada por alterações genéticas específicas, geralmente envolvendo mutações ou deleções em genes responsáveis pelo desenvolvimento embrionário. Na maioria dos casos, ocorre esporadicamente, sem histórico familiar prévio, embora existam casos com padrão de herança identificável.</p>
+            
+            <img src="/api/placeholder/600/400" alt="Representação de cromossomos e genética" />
+            
+            <h3>Prevalência</h3>
+            <p>Estima-se que a Síndrome de Dowl afete menos de 1 em cada 100.000 nascimentos, tornando-a uma condição extremamente rara. Por causa de sua raridade, muitos profissionais médicos podem não estar familiarizados com todos os aspectos desta síndrome.</p>
+        </section>
+        
+        <section id="sintomas">
+            <h2>Sinais e Sintomas</h2>
+            <p>A Síndrome de Dowl pode apresentar uma variedade de manifestações clínicas, afetando diversos sistemas do corpo. Os sintomas podem variar em gravidade entre diferentes indivíduos:</p>
+            
+            <div class="symptom-list">
+                <div class="symptom-card">
+                    <h3>Características Faciais</h3>
+                    <ul>
+                        <li>Hipertelorismo (aumento da distância entre os olhos)</li>
+                        <li>Ponte nasal achatada</li>
+                        <li>Filtro nasal longo</li>
+                        <li>Micrognatia (mandíbula pequena)</li>
+                    </ul>
+                </div>
+                
+                <div class="symptom-card">
+                    <h3>Anomalias Esqueléticas</h3>
+                    <ul>
+                        <li>Escoliose</li>
+                        <li>Anomalias vertebrais</li>
+                        <li>Deformidades nos pés e mãos</li>
+                        <li>Baixa estatura</li>
+                    </ul>
+                </div>
+                
+                <div class="symptom-card">
+                    <h3>Problemas Neurológicos</h3>
+                    <ul>
+                        <li>Deficiência intelectual variável</li>
+                        <li>Atraso no desenvolvimento</li>
+                        <li>Hipotonia (baixo tônus muscular)</li>
+                        <li>Convulsões em alguns casos</li>
+                    </ul>
+                </div>
+                
+                <div class="symptom-card">
+                    <h3>Problemas Cardíacos</h3>
+                    <ul>
+                        <li>Defeitos septais</li>
+                        <li>Anomalias das válvulas cardíacas</li>
+                        <li>Outras cardiopatias congênitas</li>
+                    </ul>
+                </div>
+                
+                <div class="symptom-card">
+                    <h3>Questões Gastrointestinais</h3>
+                    <ul>
+                        <li>Refluxo gastroesofágico</li>
+                        <li>Dificuldades de alimentação</li>
+                        <li>Malformações intestinais</li>
+                    </ul>
+                </div>
+                
+                <div class="symptom-card">
+                    <h3>Outros Sistemas</h3>
+                    <ul>
+                        <li>Problemas respiratórios</li>
+                        <li>Anomalias renais</li>
+                        <li>Deficiências auditivas</li>
+                        <li>Problemas de visão</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p class="highlight">Importante: Os sintomas podem variar significativamente entre os indivíduos afetados, com alguns apresentando manifestações mais leves, enquanto outros podem ter complicações mais graves.</p>
+        </section>
+        
+        <section id="diagnostico">
+            <h2>Diagnóstico</h2>
+            <p>O diagnóstico da Síndrome de Dowl geralmente envolve uma combinação de avaliação clínica, testes genéticos e exames de imagem:</p>
+            
+            <h3>Avaliação Clínica</h3>
+            <p>Um geneticista médico ou especialista em doenças raras avaliará os sinais físicos e a história médica do paciente. As características faciais distintas e o padrão de anomalias podem sugerir o diagnóstico.</p>
+            
+            <h3>Testes Genéticos</h3>
+            <p>A análise cromossômica, sequenciamento de DNA e outras técnicas moleculares são utilizadas para identificar as alterações genéticas específicas associadas à síndrome.</p>
+            
+            <h3>Exames Complementares</h3>
+            <ul>
+                <li>Exames de imagem (radiografias, tomografias, ressonância magnética)</li>
+                <li>Ecocardiograma para avaliar problemas cardíacos</li>
+                <li>Avaliações neurológicas</li>
+                <li>Testes auditivos e visuais</li>
+            </ul>
+            
+            <div class="info-box">
+                <p>O diagnóstico precoce é crucial para iniciar intervenções terapêuticas que possam melhorar a qualidade de vida e o desenvolvimento da criança com Síndrome de Dowl.</p>
+            </div>
+        </section>
+        
+        <section id="tratamento">
+            <h2>Tratamento e Abordagem</h2>
+            <p>O tratamento da Síndrome de Dowl é multidisciplinar e focado no manejo dos sintomas específicos apresentados pelo indivíduo. Não existe cura para a síndrome, mas diversas intervenções podem melhorar significativamente a qualidade de vida:</p>
+            
+            <h3>Equipe Multidisciplinar</h3>
+            <p>O acompanhamento geralmente envolve diversos especialistas:</p>
+            <ul>
+                <li>Geneticista</li>
+                <li>Neurologista pediátrico</li>
+                <li>Cardiologista</li>
+                <li>Ortopedista</li>
+                <li>Fonoaudiólogo</li>
+                <li>Fisioterapeuta</li>
+                <li>Terapeuta ocupacional</li>
+                <li>Psicólogo</li>
+                <li>Nutricionista</li>
+            </ul>
+            
+            <h3>Intervenções Terapêuticas</h3>
+            <p>Dependendo das manifestações clínicas, podem ser necessárias:</p>
+            <ul>
+                <li>Cirurgias corretivas para malformações cardíacas ou esqueléticas</li>
+                <li>Terapias de reabilitação (fisioterapia, terapia ocupacional)</li>
+                <li>Fonoaudiologia para dificuldades de fala e alimentação</li>
+                <li>Medicamentos para controle de convulsões ou outros sintomas</li>
+                <li>Intervenção precoce para estimular o desenvolvimento</li>
+            </ul>
+            
+            <h3>Suporte Educacional</h3>
+            <p>Crianças com Síndrome de Dowl frequentemente necessitam de suporte educacional adaptado às suas necessidades específicas. Planos educacionais individualizados podem ajudar a maximizar seu potencial de aprendizagem.</p>
+            
+            <h3>Suporte Familiar</h3>
+            <p>Orientação e apoio às famílias são componentes essenciais do tratamento. Grupos de apoio podem conectar famílias enfrentando desafios semelhantes e fornecer recursos valiosos.</p>
+            
+            <img src="/api/placeholder/600/400" alt="Equipe médica multidisciplinar" />
+        </section>
+        
+        <section id="recursos">
+            <h2>Recursos e Suporte</h2>
+            <p>Embora a Síndrome de Dowl seja rara, existem recursos disponíveis para pacientes e famílias:</p>
+            
+            <h3>Organizações de Apoio</h3>
+            <ul>
+                <li>Associações de doenças raras</li>
+                <li>Grupos de apoio para famílias</li>
+                <li>Plataformas online de informação e conexão</li>
+            </ul>
+            
+            <h3>Direitos e Benefícios</h3>
+            <p>Pessoas com Síndrome de Dowl podem ter direito a diversos benefícios e serviços:</p>
+            <ul>
+                <li>Benefícios de assistência social</li>
+                <li>Programas de educação especial</li>
+                <li>Cobertura especial de saúde</li>
+                <li>Isenções fiscais</li>
+            </ul>
+            
+            <h3>Literatura e Pesquisa</h3>
+            <p>A pesquisa sobre a Síndrome de Dowl continua avançando. Acompanhar publicações recentes e participar de estudos clínicos, quando disponíveis, pode contribuir para um melhor entendimento desta condição rara.</p>
+            
+            <div class="info-box">
+                <h3>Consulte um Especialista</h3>
+                <p>Este site fornece informações gerais sobre a Síndrome de Dowl. Para diagnóstico e tratamento, é fundamental consultar profissionais de saúde especializados em genética médica e doenças raras.</p>
+            </div>
+        </section>
+        
+        <section id="faq">
+            <h2>Perguntas Frequentes</h2>
+            <p>Abaixo estão algumas perguntas comuns sobre a Síndrome de Dowl:</p>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    A Síndrome de Dowl é hereditária?
+                </div>
+                <div class="faq-answer">
+                    <p>Na maioria dos casos, a Síndrome de Dowl ocorre esporadicamente, sem histórico familiar prévio. No entanto, em alguns casos raros, pode haver um padrão de herança genética identificável. Os geneticistas podem fornecer aconselhamento genético às famílias para determinar o risco de recorrência em gestações futuras.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Qual é a expectativa de vida para pessoas com Síndrome de Dowl?
+                </div>
+                <div class="faq-answer">
+                    <p>A expectativa de vida varia consideravelmente dependendo da gravidade das manifestações clínicas, especialmente das complicações cardíacas e respiratórias. Com acompanhamento médico adequado e intervenções precoces, muitas pessoas com Síndrome de Dowl podem ter uma boa qualidade de vida. Os avanços na medicina têm melhorado progressivamente o prognóstico para esta condição.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Como diferenciar a Síndrome de Dowl de outras síndromes genéticas?
+                </div>
+                <div class="faq-answer">
+                    <p>O diagnóstico diferencial entre a Síndrome de Dowl e outras condições genéticas requer avaliação especializada por geneticistas médicos. Embora algumas características possam se sobrepor a outras síndromes, testes genéticos específicos podem identificar as alterações moleculares características da Síndrome de Dowl. É importante não confundir com a Síndrome de Down, que tem uma causa genética completamente diferente.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <button id="theme-toggle">Alternar Modo Escuro</button>
+    <button id="back-to-top">↑ Topo</button>
+    
+    <footer>
+        <p>&copy; 2025 - Site Informativo sobre Síndrome de Dowl</p>
+        <p>Este site tem caráter exclusivamente informativo e não substitui a consulta médica profissional.</p>
+    </footer>
+
+    <script>
+        // Script simples para alternar modo escuro
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Verificar preferência salva no localStorage
+        if (localStorage.getItem('darkMode') === 'true') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = 'Alternar Modo Claro';
+        }
+        
+        // Função para alternar modo
+        themeToggle.addEventListener('click', function() {
+            // Alternar classe no body
+            body.classList.toggle('dark-mode');
+            
+            // Atualizar texto do botão
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.textContent = 'Alternar Modo Claro';
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                themeToggle.textContent = 'Alternar Modo Escuro';
+                localStorage.setItem('darkMode', 'false');
+            }
+        });
+        
+        // Botão voltar ao topo
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Accordion para FAQs
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(function(question) {
+            question.addEventListener('click', function() {
+                // Obter o elemento de resposta associado
+                const answer = this.nextElementSibling;
+                
+                // Verificar se já está ativo
+                const isActive = answer.classList.contains('active');
+                
+                // Fechar todas as respostas
+                document.querySelectorAll('.faq-answer').forEach(function(item) {
+                    item.classList.remove('active');
+                });
+                
+                // Se não estava ativo antes, abrir este
+                if (!isActive) {
+                    answer.classList.add('active');
+                }
+            });
+        });
+        
+        // Rolagem suave para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
